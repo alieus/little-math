@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="layout.Power"
+    android:weightSum="1">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="139dp"
+        android:layout_weight="0.22">
+
+        <EditText
+            android:id="@+id/base"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:layout_toLeftOf="@+id/exponent"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="60dp"
+            android:textSize="60dp"
+            android:textAlignment="textEnd" />
+
+        <NumberPicker
+            android:id="@+id/exponent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"></NumberPicker>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/calculation"
+        android:textSize="30sp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/result"
+        android:textSize="30sp"
+        android:textAlignment="textEnd" />
+
+</LinearLayout>
