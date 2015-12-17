@@ -5,9 +5,9 @@
 .DS_Store
 /build
 /captures
-app/app.iml
-.idea/vcs.xml
-.idea/misc.xml
-.idea/gradle.xml
-.idea/encodings.xml
+/app/app.iml
+/.idea/vcs.xml
+/.idea/misc.xml
+/.idea/gradle.xml
+/.idea/encodings.xml
 *~
