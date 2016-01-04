@@ -10,10 +10,21 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:background="#df1d1d"
+        android:textColor="#ffffff"
+        android:visibility="visible"
+        android:singleLine="true"
+        android:onClick="launchEquation" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Power"
         android:id="@+id/launchPower"
-        android:onClick="launchPower"
-        />
+        android:onClick="launchPower" />
 
     <fragment
         android:layout_width="match_parent"

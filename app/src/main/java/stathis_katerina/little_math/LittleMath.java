@@ -16,4 +16,8 @@ public class LittleMath extends AppCompatActivity {
 
     }
 
+    public void launchEquation(View view) {
+
+    }
+
 }
