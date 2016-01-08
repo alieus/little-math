@@ -6,10 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-
-import layout.Power;
 
 public class LittleMath extends FragmentActivity {
 
@@ -44,7 +40,7 @@ public class LittleMath extends FragmentActivity {
     }
 
     public void launchEquation(View view) {
-
+        putFragmentToContent(new Equation());
     }
 
     boolean isOnMenu() {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="layout.Power"
+    tools:context="stathis_katerina.little_math.Power"
     android:weightSum="1">
     <RelativeLayout
         android:layout_width="match_parent"

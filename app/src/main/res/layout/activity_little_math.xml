@@ -20,7 +20,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Button"
+                android:text="Equation"
                 android:id="@+id/button"
                 android:layout_gravity="center_horizontal"
                 android:background="#df1d1d"

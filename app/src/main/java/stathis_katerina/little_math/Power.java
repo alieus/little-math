@@ -1,4 +1,4 @@
-package layout;
+package stathis_katerina.little_math;
 
 
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import stathis_katerina.little_math.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
