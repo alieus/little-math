@@ -6,14 +6,33 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by Katerina on 8/1/2016.
+ * Model that represents a line of (mathematical) text that is requested to be filled out, correctly, by the user.
+ * The line may have some parts already filled.
+ * The unfilled parts (elements) may be of various types such as numbers, free text or selection from a list.
  */
 public class UnfilledLine {
 
     public static enum ElementType {
-        CONSTANT, TEXT, LIST, NUMBER, UNSIGNED_NUMBER, INTEGER, NATURAL;
+
+        /** Part of the line that is already filled */
+        CONSTANT,
+        /** Indicates that text of no special format is expected */
+        TEXT,
+        /** Indicates that a text value from a specified set of values is expected */
+        LIST,
+        /** Indicates that a real number is expected */
+        NUMBER,
+        /** Indicates that a non-negative real number is expected */
+        UNSIGNED_NUMBER,
+        /** Indicates that an integer is expected */
+        INTEGER,
+        /** Indicates that a non-negative integer is expected */
+        NATURAL;
     }
 
+    /**
+     * Atomic part of the line that is either pre-filled or expected to be filled by the user.
+     */
     public static class Element {
         private String value;
         private final String correctValue;
@@ -41,6 +60,10 @@ public class UnfilledLine {
             this.correctValue = correctValue;
         }
 
+        /**
+         * Returns the current value. May be changed by a call to {@link #setValue(String)}.
+         * @return the current value
+         */
         public String getValue() {
             return value;
         }
@@ -49,10 +72,20 @@ public class UnfilledLine {
             this.value = value;
         }
 
+        /**
+         * Returns the correct (expected) value. {@code null} indicates that all values are considered
+         * accepted.
+         * @return the correct value
+         */
         public String getCorrectValue() {
             return correctValue;
         }
 
+        /**
+         * Returns the possible values if the element is of type {@link stathis_katerina.little_math.UnfilledLine.ElementType#LIST LIST},
+         * an empty list otherwise
+         * @return the list of possible values or an empty list
+         */
         public List<String> getOptions() {
             return options;
         }
@@ -75,6 +108,10 @@ public class UnfilledLine {
             }
         }
 
+        /**
+         * Returns {@code true} iff the element has a value even if it is wrong.
+         * @return {@code true} iff the element has a value
+         */
         public boolean isFilled() {
             switch (type) {
                 case NUMBER: case UNSIGNED_NUMBER: case INTEGER: case NATURAL:
