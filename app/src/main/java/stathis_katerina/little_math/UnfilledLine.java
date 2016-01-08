@@ -11,7 +11,7 @@ import java.util.Objects;
 public class UnfilledLine {
 
     public static enum ElementType {
-        CONSTANT, TEXT, LIST, NUMBER, INTEGER, NATURAL;
+        CONSTANT, TEXT, LIST, NUMBER, UNSIGNED_NUMBER, INTEGER, NATURAL;
     }
 
     public static class Element {
@@ -63,10 +63,30 @@ public class UnfilledLine {
 
         public boolean isCorrect() {
             if (type == ElementType.NUMBER) {
-                return correctValue == null && value == null
-                        || (Math.abs(Double.parseDouble(value) - Double.parseDouble(correctValue)) < 0.01);
+                try {
+                    return correctValue == null
+                            || value != null && !value.isEmpty()
+                            && (Math.abs(Double.parseDouble(value) - Double.parseDouble(correctValue)) < 0.01);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
             } else {
-                return Objects.equals(value, correctValue);
+                return correctValue == null || value != null && value.equals(correctValue);
+            }
+        }
+
+        public boolean isFilled() {
+            switch (type) {
+                case NUMBER: case UNSIGNED_NUMBER: case INTEGER: case NATURAL:
+                    if (value == null) return false;
+                    try {
+                        Double.parseDouble(value);
+                        return true;
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                default:
+                    return value != null && !value.isEmpty();
             }
         }
     }
@@ -83,5 +103,23 @@ public class UnfilledLine {
 
     public List<Element> getElements() {
         return elements;
+    }
+
+    public boolean isAllCorrect() {
+        for (Element elem : elements) {
+            if (! elem.isCorrect()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isAllFilled() {
+        for (Element elem : elements) {
+            if (! elem.isFilled()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
