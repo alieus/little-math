@@ -94,8 +94,15 @@ public class UnfilledLine {
             return type;
         }
 
+        /**
+         * Returns {@code true} iff this element is filled correctly. For most types, this is determined
+         * by string equality between the value and the correct value. For floating point types
+         * (NUMBER and UNSIGNED_NUMBER) this determined by their numerical difference, specifically,
+         * by the formula: abs(value - correctValue) < 0.01.
+         * @return {@code true} iff this element is filled correctly
+         */
         public boolean isCorrect() {
-            if (type == ElementType.NUMBER) {
+            if (type == ElementType.NUMBER || type == ElementType.UNSIGNED_NUMBER) {
                 try {
                     return correctValue == null
                             || value != null && !value.isEmpty()
@@ -109,8 +116,8 @@ public class UnfilledLine {
         }
 
         /**
-         * Returns {@code true} iff the element has a value even if it is wrong.
-         * @return {@code true} iff the element has a value
+         * Returns {@code true} iff this element has a value even if it is wrong.
+         * @return {@code true} iff this element has a value
          */
         public boolean isFilled() {
             switch (type) {
