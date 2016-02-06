@@ -60,6 +60,8 @@ public class UnfilledLine {
             this.correctValue = correctValue;
         }
 
+
+
         /**
          * Returns the current value. May be changed by a call to {@link #setValue(String)}.
          * @return the current value

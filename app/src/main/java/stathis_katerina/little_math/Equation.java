@@ -112,11 +112,11 @@ public class Equation extends Fragment {
         });
     }
 
-    void stepTwo(UnfilledLine prevLine) {
+    void stepTwo(final UnfilledLine prevLine) {
         double p1=Double.parseDouble(prevLine.getElements().get(0).getValue());
         double n1 = Double.parseDouble(prevLine.getElements().get(3).getValue());
         double n2 = Double.parseDouble(prevLine.getElements().get(5).getValue());
-        double result = prevLine.getElements().get(5).getValue().equals("+") ? n1 + n2 : n1 - n2;
+        final double result = prevLine.getElements().get(5).getValue().equals("+") ? n1 + n2 : n1 - n2;
         final UnfilledLineView line = new UnfilledLineView(getContext());
 
         line.setModel(new UnfilledLine(Arrays.asList(
@@ -127,23 +127,23 @@ public class Equation extends Fragment {
         )));
         ((LinearLayout) get(R.id.main)).addView(line);
 
-        double upologismos;
+        final double upologismos;
         if((p1==0) && (result==0) ){
-            apotelesma="this equation has infinite solutions!!!!";
+            apotelesma="this equation has infinite solutions!";
             System.out.println(apotelesma);
             upologismos=0.0;
         }else if ((p1==0) && (result!=0)){
-            apotelesma="this equation has no solution!!!!";
+            apotelesma="this equation has no solution!";
             System.out.println(apotelesma);
             upologismos=0.0;
         }else if ((p1!=0)&& (result!=0)){
             upologismos=result/p1;
-            apotelesma="this equation has only one solution!!!! "+ upologismos;
+            apotelesma="this equation has only one solution! "+ upologismos;
             System.out.println(apotelesma);
             System.out.println(upologismos);
         }else {// if ((p1!=0) && (result==0)){
             upologismos = 0;
-            apotelesma="this equation has only one solution!!!! "+ upologismos;
+            apotelesma="this equation has only one solution! "+ upologismos;
             System.out.println(apotelesma);
             System.out.println(upologismos);
         }
@@ -151,18 +151,33 @@ public class Equation extends Fragment {
         makeFillButton(line);
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override
+
             public void onFilled(UnfilledLineView unfilledLineView) {
 
+               prior_step_three(upologismos);
                 stepThree(apotelesma);
             }
         });
     }
 
+    void prior_step_three(double upologismos){
+        final UnfilledLineView line = new UnfilledLineView(getContext());
+        line.setModel(new UnfilledLine(Arrays.asList(
+                new Element("x"),
+                new Element("="),
+                new Element(upologismos + "", ElementType.NUMBER, upologismos + "")
+                //new Element(upologismos, ElementType.NUMBER, upologismos)
+        )));
+        ((LinearLayout) get(R.id.main)).addView(line);
+
+    }
     void stepThree(String apotelesma) {
+
         final UnfilledLineView line = new UnfilledLineView(getContext());
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element(apotelesma, ElementType.TEXT, apotelesma)
         )));
         ((LinearLayout) get(R.id.main)).addView(line);
     }
+
 }
