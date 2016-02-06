@@ -136,6 +136,7 @@ public class UnfilledLineView extends LinearLayout {
             }
 
             if (view instanceof TextView) {
+                ((TextView) view).setMinWidth(30);
                 ((TextView) view).addTextChangedListener(new ElementTextChanged(elem, (TextView) view));
             }
 
