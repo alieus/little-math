@@ -3,6 +3,7 @@ package stathis_katerina.little_math;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 import static stathis_katerina.little_math.UnfilledLine.*;
 
 public class Equation extends Fragment {
+    String apotelesma;
 
     private View get(int id) {
         return  getView().findViewById(id);
@@ -78,7 +80,8 @@ public class Equation extends Fragment {
         line.addView(ok, params);
         ok.setPadding(20, 20, 20, 20);
         ok.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (line.getModel().isAllFilled()) {
                     stepOne(line.getModel());
                     ok.setVisibility(View.GONE);
@@ -110,23 +113,56 @@ public class Equation extends Fragment {
     }
 
     void stepTwo(UnfilledLine prevLine) {
+        double p1=Double.parseDouble(prevLine.getElements().get(0).getValue());
         double n1 = Double.parseDouble(prevLine.getElements().get(3).getValue());
         double n2 = Double.parseDouble(prevLine.getElements().get(5).getValue());
-        double result = prevLine.getElements().get(5).getValue().equals("+") ? n1+n2 : n1-n2;
+        double result = prevLine.getElements().get(5).getValue().equals("+") ? n1 + n2 : n1 - n2;
         final UnfilledLineView line = new UnfilledLineView(getContext());
+
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element(null, ElementType.NUMBER, prevLine.getElements().get(0).getValue()),
                 new Element("x"),
                 new Element("="),
-                new Element(null, ElementType.NUMBER, result+"")
+                new Element(null, ElementType.NUMBER, result + "")
         )));
         ((LinearLayout) get(R.id.main)).addView(line);
+
+        double upologismos;
+        if((p1==0) && (result==0) ){
+            apotelesma="this equation has infinite solutions!!!!";
+            System.out.println(apotelesma);
+            upologismos=0.0;
+        }else if ((p1==0) && (result!=0)){
+            apotelesma="this equation has no solution!!!!";
+            System.out.println(apotelesma);
+            upologismos=0.0;
+        }else if ((p1!=0)&& (result!=0)){
+            upologismos=result/p1;
+            apotelesma="this equation has only one solution!!!! "+ upologismos;
+            System.out.println(apotelesma);
+            System.out.println(upologismos);
+        }else {// if ((p1!=0) && (result==0)){
+            upologismos = 0;
+            apotelesma="this equation has only one solution!!!! "+ upologismos;
+            System.out.println(apotelesma);
+            System.out.println(upologismos);
+        }
+
         makeFillButton(line);
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override
             public void onFilled(UnfilledLineView unfilledLineView) {
-                //stepTwo(line.getModel());
+
+                stepThree(apotelesma);
             }
         });
+    }
+
+    void stepThree(String apotelesma) {
+        final UnfilledLineView line = new UnfilledLineView(getContext());
+        line.setModel(new UnfilledLine(Arrays.asList(
+                new Element(apotelesma, ElementType.TEXT, apotelesma)
+        )));
+        ((LinearLayout) get(R.id.main)).addView(line);
     }
 }

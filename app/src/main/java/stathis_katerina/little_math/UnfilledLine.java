@@ -121,8 +121,13 @@ public class UnfilledLine {
          */
         public boolean isFilled() {
             switch (type) {
-                case NUMBER: case UNSIGNED_NUMBER: case INTEGER: case NATURAL:
-                    if (value == null) return false;
+                case NUMBER:
+                case UNSIGNED_NUMBER:
+                case INTEGER:
+                case NATURAL:
+                    if (value == null) {
+                        return false;
+                    }
                     try {
                         Double.parseDouble(value);
                         return true;

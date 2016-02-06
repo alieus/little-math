@@ -121,6 +121,13 @@ public class UnfilledLineView extends LinearLayout {
                     editText.setInputType(TYPE_CLASS_NUMBER | TYPE_NUMBER_FLAG_DECIMAL);
                     view = editText;
                     break;
+                case TEXT:
+                    TextView textViewT = new TextView(getContext());
+                    textViewT.setText(elem.getValue());
+                    textViewT.setTextSize(30);
+
+                    view = textViewT;
+                    break;
                 case LIST:
                 default:
                     editText = new EditText(getContext());
