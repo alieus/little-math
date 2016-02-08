@@ -89,13 +89,13 @@ public class Power extends Fragment {
         String result;
         if (base == null) {
             result = "";
-            calc = "Write base";
+            calc = "Παρακαλώ πληκτρολογήστε την βάση";
         } else if (exp == 0) {
             if (base == 0) {
-                calc = "Not Defined for base and exponent 0";
-                result = "Not Defined";
+                calc = "Δεν ορίζεται για βάση και εκθέτη 0";
+                result = "Δεν ορίζεται";
             } else {
-                calc = "By Definition";
+                calc = "Εξ ορισμού";
                 result = "=1";
             }
         } else {

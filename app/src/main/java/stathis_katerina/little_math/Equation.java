@@ -40,12 +40,12 @@ public class Equation extends Fragment {
 
     void makeFillButton(final UnfilledLineView line) {
         final Button fill = new Button(getContext());
-        fill.setText("Fill");
+        fill.setText("ΓΕΜΙΣΕ");
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
-        params.setMargins(100, 0, 0, 0);
+        params.setMargins(100, 0, 0,  0);
         line.addView(fill, params);
         fill.setPadding(20, 20, 20, 20);
         fill.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +71,7 @@ public class Equation extends Fragment {
         ((LinearLayout) get(R.id.main)).addView(line);
 
         final Button ok = new Button(getContext());
-        ok.setText("OK!");
+        ok.setText("ΟΚ!");
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -129,21 +129,21 @@ public class Equation extends Fragment {
 
         final double upologismos;
         if((p1==0) && (result==0) ){
-            apotelesma="this equation has infinite solutions!";
+            apotelesma="Η εξίσωση έχει άπειρες λύσεις!";
             System.out.println(apotelesma);
             upologismos=0.0;
         }else if ((p1==0) && (result!=0)){
-            apotelesma="this equation has no solution!";
+            apotelesma="Η εξίσωση δεν έχει καμία λύση!";
             System.out.println(apotelesma);
             upologismos=0.0;
         }else if ((p1!=0)&& (result!=0)){
             upologismos=result/p1;
-            apotelesma="this equation has only one solution! "+ upologismos;
+            apotelesma="Η εξίσωση έχει μια μόνο λύση! "+ upologismos;
             System.out.println(apotelesma);
             System.out.println(upologismos);
         }else {// if ((p1!=0) && (result==0)){
             upologismos = 0;
-            apotelesma="this equation has only one solution! "+ upologismos;
+            apotelesma="Η εξίσωση έχει μια μόνο λύση! "+ upologismos;
             System.out.println(apotelesma);
             System.out.println(upologismos);
         }
