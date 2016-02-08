@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,10 +32,21 @@ public class MCD extends ProcedureDemoFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        get(R.id.restart).setVisibility(View.INVISIBLE);
+        askNumberCount();
+    }
+
+    @Override
+    protected void restart() {
+        super.restart();
+        ((LinearLayout) get(R.id.content)).removeAllViews();
+        ((TextView) get(R.id.comment)).setText("");
+        get(R.id.restart).setVisibility(View.INVISIBLE);
         askNumberCount();
     }
 
     private void askNumberCount() {
+        get(R.id.fill).setVisibility(View.INVISIBLE);
         final UnfilledLineView line = new UnfilledLineView(getContext());
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element("Πόσοι είναι οι αριθμοί;  "),
@@ -112,6 +124,13 @@ public class MCD extends ProcedureDemoFragment {
         elements.addAll(Arrays.asList(new Element("|"), new Element(null, ElementType.NATURAL, divisor + "")));
         line.setModel(new UnfilledLine(elements));
 
+        get(R.id.fill).setVisibility(View.VISIBLE);
+        fillAtion = new FillAction() {
+            @Override public void fill() {
+                ((EditText) line.getChildAt(line.getModel().getElements().size()-1)).setText(divisor+"");
+            }
+        };
+
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override
             public void onFilled(UnfilledLineView unfilledLineView) {
@@ -137,6 +156,12 @@ public class MCD extends ProcedureDemoFragment {
         line.setDisableOnCorrect(true);
         line.setModel(new UnfilledLine(elems));
         ((LinearLayout) get(R.id.content)).addView(line);
+
+        fillAtion = new FillAction() {
+            @Override public void fill() {
+                line.fill();
+            }
+        };
 
         final boolean terminatedFinal = terminated;
         line.setOnFilled(new UnfilledLineView.FilledListener() {
@@ -164,9 +189,18 @@ public class MCD extends ProcedureDemoFragment {
                 new Element(null, ElementType.NATURAL, mcd + "")
         )));
         ((LinearLayout) get(R.id.content)).addView(line);
+
+        fillAtion = new FillAction() {
+            @Override public void fill() {
+                line.fill();
+            }
+        };
+
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override  public void onFilled(UnfilledLineView unfilledLineView) {
                 ((TextView) get(R.id.comment)).setText("Μπράβο!");
+                get(R.id.restart).setVisibility(View.VISIBLE);
+                get(R.id.fill).setVisibility(View.INVISIBLE);
             }
         });
     }

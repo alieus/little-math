@@ -140,8 +140,12 @@ public class UnfilledLineView extends LinearLayout {
             }
 
             if (view instanceof TextView) {
-                ((TextView) view).setMinWidth(30);
+                ((TextView) view).setMinWidth(45);
                 ((TextView) view).addTextChangedListener(new ElementTextChanged(elem, (TextView) view));
+            }
+
+            if (view instanceof EditText) {
+                ((EditText) view).setTextSize(26);
             }
 
             addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
