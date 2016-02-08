@@ -40,7 +40,7 @@ public class MCD extends ProcedureDemoFragment {
     protected void restart() {
         super.restart();
         ((LinearLayout) get(R.id.content)).removeAllViews();
-        ((TextView) get(R.id.comment)).setText("");
+        setComment("");
         get(R.id.restart).setVisibility(View.INVISIBLE);
         askNumberCount();
     }
@@ -69,7 +69,7 @@ public class MCD extends ProcedureDemoFragment {
 
     private void chooseNumbers(int numberCount) {
         mcd = 1;
-        ((TextView) get(R.id.comment)).setText("Συμπλήρωσε τους "+numberCount+" αριθμούς");
+        setComment("Συμπλήρωσε τους "+numberCount+" αριθμούς");
 
         List<Element> elems = new LinkedList<>();
         for (int i = 0; i < numberCount; i++) {
@@ -119,7 +119,7 @@ public class MCD extends ProcedureDemoFragment {
         final int divisor = lastDivisor;
         mcd *= divisor;
 
-        ((TextView) get(R.id.comment)).setText("Βρες το μικρότερο αριθμό που είναι κοινός διαιρέτης");
+        setComment("Βρες το μικρότερο αριθμό που είναι κοινός διαιρέτης");
         elements.addAll(prevElements);
         elements.addAll(Arrays.asList(new Element("|"), new Element(null, ElementType.NATURAL, divisor + "")));
         line.setModel(new UnfilledLine(elements));
@@ -140,7 +140,7 @@ public class MCD extends ProcedureDemoFragment {
     }
 
     private void divide(UnfilledLine prevLine, final int divisor) {
-        ((TextView) get(R.id.comment)).setText("Διαίρεσε τους αριθμούς με το διαιρέτη που βρήκες");
+        setComment("Διαίρεσε τους αριθμούς με το διαιρέτη που βρήκες");
         List<Element> elems = new LinkedList<>();
         boolean terminated = false;
 
@@ -178,9 +178,9 @@ public class MCD extends ProcedureDemoFragment {
 
     private void multiplyDivisors() {
         if (mcd > 1) {
-            ((TextView) get(R.id.comment)).setText("Πλέον δεν υπάρχει κοινός διαιρέτης εκτός από το 1, πολλαπλασίασε όλους τους διαιρέτες που χρησιμοποίησες για να βρεις το αποτέλεσμα");
+            setComment("Πλέον δεν υπάρχει κοινός διαιρέτης εκτός από το 1, πολλαπλασίασε όλους τους διαιρέτες που χρησιμοποίησες για να βρεις το αποτέλεσμα");
         } else {
-            ((TextView) get(R.id.comment)).setText("Οι αριθμοί που έδωσες δεν έχουν άλλο κοινό διαιρέτη εκτός από το 1");
+            setComment("Οι αριθμοί που έδωσες δεν έχουν άλλο κοινό διαιρέτη εκτός από το 1");
         }
         final UnfilledLineView line = new UnfilledLineView(getContext());
         line.setDisableOnCorrect(true);
@@ -198,7 +198,7 @@ public class MCD extends ProcedureDemoFragment {
 
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override  public void onFilled(UnfilledLineView unfilledLineView) {
-                ((TextView) get(R.id.comment)).setText("Μπράβο!");
+                setComment("Μπράβο! Το βρήκες!");
                 get(R.id.restart).setVisibility(View.VISIBLE);
                 get(R.id.fill).setVisibility(View.INVISIBLE);
             }
