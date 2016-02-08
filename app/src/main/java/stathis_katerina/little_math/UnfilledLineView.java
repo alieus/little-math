@@ -104,21 +104,25 @@ public class UnfilledLineView extends LinearLayout {
                 case INTEGER:
                     EditText editText = new EditText(getContext());
                     editText.setInputType(TYPE_CLASS_NUMBER | TYPE_NUMBER_FLAG_SIGNED);
+                    editText.setText(elem.getValue());
                     view = editText;
                     break;
                 case NATURAL:
                     editText = new EditText(getContext());
                     editText.setInputType(TYPE_CLASS_NUMBER | TYPE_NUMBER_VARIATION_NORMAL);
+                    editText.setText(elem.getValue());
                     view = editText;
                     break;
                 case NUMBER:
                     editText = new EditText(getContext());
                     editText.setInputType(TYPE_CLASS_NUMBER | TYPE_NUMBER_FLAG_DECIMAL | TYPE_NUMBER_FLAG_SIGNED);
+                    editText.setText(elem.getValue());
                     view = editText;
                     break;
                 case UNSIGNED_NUMBER:
                     editText = new EditText(getContext());
                     editText.setInputType(TYPE_CLASS_NUMBER | TYPE_NUMBER_FLAG_DECIMAL);
+                    editText.setText(elem.getValue());
                     view = editText;
                     break;
                 case TEXT:

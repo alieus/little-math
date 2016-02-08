@@ -43,6 +43,10 @@ public class LittleMath extends FragmentActivity {
         putFragmentToContent(new Equation());
     }
 
+    public void launchMCD(View view) {
+        putFragmentToContent(new MCD());
+    }
+
     boolean isOnMenu() {
         return findViewById(R.id.menu).getVisibility() == View.VISIBLE;
     }
