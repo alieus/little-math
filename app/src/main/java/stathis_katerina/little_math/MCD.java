@@ -58,9 +58,11 @@ public class MCD extends ProcedureDemoFragment {
         final Button ok = Common.makeOkButton(getContext(), new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (line.getModel().isAllFilled()) {
-                    line.setVisibility(View.GONE);
                     int numberCount = Integer.parseInt(line.getModel().getElements().get(1).getValue());
-                    chooseNumbers(numberCount);
+                    if (numberCount > 1) {
+                        line.setVisibility(View.GONE);
+                        chooseNumbers(numberCount);
+                    }
                 }
             }
         });
