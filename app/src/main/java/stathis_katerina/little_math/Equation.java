@@ -140,7 +140,7 @@ public class Equation extends ProcedureDemoFragment {
             public void onFilled(UnfilledLineView unfilledLineView) {
 
                prior_step_three(upologismos);
-                stepThree(apotelesma);
+              //  stepThree(apotelesma);
             }
         });
     }
@@ -150,16 +150,18 @@ public class Equation extends ProcedureDemoFragment {
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element("x"),
                 new Element("="),
-                new Element(upologismos + "", ElementType.NUMBER, upologismos + "")
-                //new Element(upologismos, ElementType.NUMBER, upologismos)
+                new Element(null, ElementType.NUMBER, upologismos + "")
+
         )));
         ((LinearLayout) get(R.id.content)).addView(line);
 
+        //stepThree(apotelesma);
     }
     void stepThree(String apotelesma) {
 
         final UnfilledLineView line = new UnfilledLineView(getContext());
         line.setModel(new UnfilledLine(Arrays.asList(
+
                 new Element(apotelesma, ElementType.TEXT, apotelesma)
         )));
         ((LinearLayout) get(R.id.content)).addView(line);
