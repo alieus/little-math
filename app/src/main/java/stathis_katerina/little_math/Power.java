@@ -92,8 +92,8 @@ public class Power extends Fragment {
             calc = "Παρακαλώ πληκτρολογήστε την βάση";
         } else if (exp == 0) {
             if (base == 0) {
-                calc = "Δεν ορίζεται για βάση και εκθέτη 0";
-                result = "Δεν ορίζεται";
+                calc = "Δεν ορίζεται";
+                result = "";
             } else {
                 calc = "Εξ ορισμού";
                 result = "=1";
