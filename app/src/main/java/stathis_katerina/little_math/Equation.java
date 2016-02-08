@@ -13,12 +13,9 @@ import android.widget.LinearLayout;
 import java.util.Arrays;
 import static stathis_katerina.little_math.UnfilledLine.*;
 
-public class Equation extends Fragment {
+public class Equation extends ProcedureDemoFragment {
     String apotelesma;
 
-    private View get(int id) {
-        return  getView().findViewById(id);
-    }
 
     public Equation() {
 
@@ -26,38 +23,15 @@ public class Equation extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_equation, container, false);
-    }
-
-    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         stepZero();
     }
 
-    void makeFillButton(final UnfilledLineView line) {
-        final Button fill = new Button(getContext());
-        fill.setText("ΓΕΜΙΣΕ");
-        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
-        params.setMargins(100, 0, 0,  0);
-        line.addView(fill, params);
-        fill.setPadding(20, 20, 20, 20);
-        fill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                line.fill();
-                fill.setVisibility(View.GONE);
-            }
-        });
-    }
-
     void stepZero() {
+        get(R.id.fill).setVisibility(View.INVISIBLE);
+        get(R.id.restart).setVisibility(View.INVISIBLE);
+
         final UnfilledLineView line = new UnfilledLineView(getContext());
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element(null, ElementType.NUMBER, null),
@@ -68,7 +42,7 @@ public class Equation extends Fragment {
                 new Element(null, ElementType.NUMBER, null)
         )));
         line.setDisableOnCorrect(false);
-        ((LinearLayout) get(R.id.main)).addView(line);
+        ((LinearLayout) get(R.id.content)).addView(line);
 
         final Button ok = new Button(getContext());
         ok.setText("ΟΚ!");
@@ -102,8 +76,15 @@ public class Equation extends Fragment {
                 new Element(null, ElementType.LIST, prevLine.getElements().get(2).getValue().equals("+") ? "-" : "+"),
                 new Element(null, ElementType.UNSIGNED_NUMBER, prevLine.getElements().get(3).getValue())
         )));
-        ((LinearLayout) get(R.id.main)).addView(line);
-        makeFillButton(line);
+        ((LinearLayout) get(R.id.content)).addView(line);
+
+        fillAtion = new FillAction() {
+            @Override public void fill() {
+                line.fill();
+            }
+        };
+        get(R.id.fill).setVisibility(View.VISIBLE);
+
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override
             public void onFilled(UnfilledLineView unfilledLineView) {
@@ -125,30 +106,34 @@ public class Equation extends Fragment {
                 new Element("="),
                 new Element(null, ElementType.NUMBER, result + "")
         )));
-        ((LinearLayout) get(R.id.main)).addView(line);
+        ((LinearLayout) get(R.id.content)).addView(line);
 
         final double upologismos;
-        if((p1==0) && (result==0) ){
-            apotelesma="Η εξίσωση έχει άπειρες λύσεις!";
+        if ((p1 == 0) && (result == 0)) {
+            apotelesma = "Η εξίσωση έχει άπειρες λύσεις!";
             System.out.println(apotelesma);
-            upologismos=0.0;
-        }else if ((p1==0) && (result!=0)){
-            apotelesma="Η εξίσωση δεν έχει καμία λύση!";
+            upologismos = 0.0;
+        } else if ((p1 == 0) && (result != 0)) {
+            apotelesma = "Η εξίσωση δεν έχει καμία λύση!";
             System.out.println(apotelesma);
-            upologismos=0.0;
-        }else if ((p1!=0)&& (result!=0)){
-            upologismos=result/p1;
-            apotelesma="Η εξίσωση έχει μια μόνο λύση! "+ upologismos;
+            upologismos = 0.0;
+        } else if ((p1 != 0) && (result != 0)) {
+            upologismos = result / p1;
+            apotelesma = "Η εξίσωση έχει μια μόνο λύση! " + upologismos;
             System.out.println(apotelesma);
             System.out.println(upologismos);
-        }else {// if ((p1!=0) && (result==0)){
+        } else {// if ((p1!=0) && (result==0)){
             upologismos = 0;
-            apotelesma="Η εξίσωση έχει μια μόνο λύση! "+ upologismos;
+            apotelesma = "Η εξίσωση έχει μια μόνο λύση! " + upologismos;
             System.out.println(apotelesma);
             System.out.println(upologismos);
         }
 
-        makeFillButton(line);
+        fillAtion = new FillAction() {
+            @Override public void fill() {
+                line.fill();
+            }
+        };
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override
 
@@ -168,7 +153,7 @@ public class Equation extends Fragment {
                 new Element(upologismos + "", ElementType.NUMBER, upologismos + "")
                 //new Element(upologismos, ElementType.NUMBER, upologismos)
         )));
-        ((LinearLayout) get(R.id.main)).addView(line);
+        ((LinearLayout) get(R.id.content)).addView(line);
 
     }
     void stepThree(String apotelesma) {
@@ -177,7 +162,9 @@ public class Equation extends Fragment {
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element(apotelesma, ElementType.TEXT, apotelesma)
         )));
-        ((LinearLayout) get(R.id.main)).addView(line);
+        ((LinearLayout) get(R.id.content)).addView(line);
+
+
     }
 
 }
