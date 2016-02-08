@@ -14,8 +14,6 @@ import java.util.Arrays;
 import static stathis_katerina.little_math.UnfilledLine.*;
 
 public class Equation extends ProcedureDemoFragment {
-    String apotelesma;
-
 
     public Equation() {
 
@@ -28,7 +26,16 @@ public class Equation extends ProcedureDemoFragment {
         stepZero();
     }
 
+    @Override
+    protected void restart() {
+        super.restart();
+        ((LinearLayout) get(R.id.content)).removeAllViews();
+        setComment("");
+        stepZero();
+    }
+
     void stepZero() {
+        setComment("Συμπλήηρωσε την εξίσωση που θες να λύσεις");
         get(R.id.fill).setVisibility(View.INVISIBLE);
         get(R.id.restart).setVisibility(View.INVISIBLE);
 
@@ -67,6 +74,7 @@ public class Equation extends ProcedureDemoFragment {
     }
 
     void stepOne(UnfilledLine prevLine) {
+        setComment("Πέρνα το "+prevLine.getElements().get(3).getValue()+" στο αλλο μέλος και άλλαξε του το πρόσημο");
         final UnfilledLineView line = new UnfilledLineView(getContext());
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element(null, ElementType.NUMBER, prevLine.getElements().get(0).getValue()),
@@ -77,6 +85,7 @@ public class Equation extends ProcedureDemoFragment {
                 new Element(null, ElementType.UNSIGNED_NUMBER, prevLine.getElements().get(3).getValue())
         )));
         ((LinearLayout) get(R.id.content)).addView(line);
+        line.setDisableOnCorrect(true);
 
         fillAtion = new FillAction() {
             @Override public void fill() {
@@ -93,80 +102,75 @@ public class Equation extends ProcedureDemoFragment {
         });
     }
 
+
     void stepTwo(final UnfilledLine prevLine) {
-        double p1=Double.parseDouble(prevLine.getElements().get(0).getValue());
-        double n1 = Double.parseDouble(prevLine.getElements().get(3).getValue());
-        double n2 = Double.parseDouble(prevLine.getElements().get(5).getValue());
-        final double result = prevLine.getElements().get(5).getValue().equals("+") ? n1 + n2 : n1 - n2;
+        setComment("Κάνε τις πράξεις στο δεξί μέλος");
+
+        final double p1 = Double.parseDouble(prevLine.getElements().get(0).getValue());
+        final double n1 = Double.parseDouble(prevLine.getElements().get(3).getValue());
+        final double n2 = Double.parseDouble(prevLine.getElements().get(5).getValue());
+        final double rightHand = prevLine.getElements().get(4).getValue().equals("+") ? n1 + n2 : n1 - n2;
         final UnfilledLineView line = new UnfilledLineView(getContext());
 
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element(null, ElementType.NUMBER, prevLine.getElements().get(0).getValue()),
                 new Element("x"),
                 new Element("="),
-                new Element(null, ElementType.NUMBER, result + "")
+                new Element(null, ElementType.NUMBER, rightHand + "")
         )));
         ((LinearLayout) get(R.id.content)).addView(line);
-
-        final double upologismos;
-        if ((p1 == 0) && (result == 0)) {
-            apotelesma = "Η εξίσωση έχει άπειρες λύσεις!";
-            System.out.println(apotelesma);
-            upologismos = 0.0;
-        } else if ((p1 == 0) && (result != 0)) {
-            apotelesma = "Η εξίσωση δεν έχει καμία λύση!";
-            System.out.println(apotelesma);
-            upologismos = 0.0;
-        } else if ((p1 != 0) && (result != 0)) {
-            upologismos = result / p1;
-            apotelesma = "Η εξίσωση έχει μια μόνο λύση! " + upologismos;
-            System.out.println(apotelesma);
-            System.out.println(upologismos);
-        } else {// if ((p1!=0) && (result==0)){
-            upologismos = 0;
-            apotelesma = "Η εξίσωση έχει μια μόνο λύση! " + upologismos;
-            System.out.println(apotelesma);
-            System.out.println(upologismos);
-        }
+        line.setDisableOnCorrect(true);
 
         fillAtion = new FillAction() {
             @Override public void fill() {
                 line.fill();
             }
         };
+
         line.setOnFilled(new UnfilledLineView.FilledListener() {
             @Override
 
             public void onFilled(UnfilledLineView unfilledLineView) {
-
-               prior_step_three(upologismos);
-              //  stepThree(apotelesma);
+                if ((p1 == 0) && (rightHand == 0)) {
+                    setComment("Η εξίσωση έχει άπειρες λύσεις");
+                    get(R.id.restart).setVisibility(View.VISIBLE);
+                } else if ((p1 == 0) && (rightHand != 0)) {
+                    setComment("Η εξίσωση δεν έχει καμία λύση");
+                    get(R.id.restart).setVisibility(View.VISIBLE);
+                } else {
+                    double result = rightHand / p1;
+                    setComment("Η εξίσωση έχει μια μοναδική λύση");
+                    stepThree(p1, result);
+                }
             }
         });
     }
 
-    void prior_step_three(double upologismos){
+    void stepThree(double a, final double result) {
+        setComment("Διαίρεσε και τα δύο μέλη με "+a);
         final UnfilledLineView line = new UnfilledLineView(getContext());
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element("x"),
                 new Element("="),
-                new Element(null, ElementType.NUMBER, upologismos + "")
-
+                new Element(null, ElementType.NUMBER, result + "")
         )));
         ((LinearLayout) get(R.id.content)).addView(line);
+        line.setDisableOnCorrect(true);
 
-        //stepThree(apotelesma);
+        fillAtion = new FillAction() {
+            @Override public void fill() {
+                line.fill();
+            }
+        };
+
+        line.setOnFilled(new UnfilledLineView.FilledListener() {
+            @Override public void onFilled(UnfilledLineView unfilledLineView) {
+                setComment("Μπράβο! Το βρήκες!");
+                get(R.id.restart).setVisibility(View.VISIBLE);
+                get(R.id.fill).setVisibility(View.INVISIBLE);
+            }
+        });
     }
-    void stepThree(String apotelesma) {
 
-        final UnfilledLineView line = new UnfilledLineView(getContext());
-        line.setModel(new UnfilledLine(Arrays.asList(
-
-                new Element(apotelesma, ElementType.TEXT, apotelesma)
-        )));
-        ((LinearLayout) get(R.id.content)).addView(line);
-
-
-    }
 
 }
