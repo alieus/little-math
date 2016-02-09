@@ -85,7 +85,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Μέγιστο Κοινό Πολλ/σιο"
+                android:text="Μέγιστος Κοινός Διαιρέτης"
                 android:id="@+id/launchMCD"
                 android:onClick="launchMCD"
                 android:textColor="#ffffff"
