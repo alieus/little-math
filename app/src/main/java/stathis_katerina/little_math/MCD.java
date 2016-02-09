@@ -42,6 +42,17 @@ public class MCD extends ProcedureDemoFragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
     protected void restart() {
         super.restart();
         ((LinearLayout) get(R.id.content)).removeAllViews();

@@ -18,6 +18,20 @@ public class LittleMath extends FragmentActivity {
         setContentView(R.layout.activity_little_math);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isOnMenu", isOnMenu());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (!savedInstanceState.getBoolean("isOnMenu")) {
+            findViewById(R.id.menu).setVisibility(View.GONE);
+        }
+    }
+
     public void setTitle(CharSequence title) {
         ((TextView) findViewById(R.id.title)).setText(title);
     }
