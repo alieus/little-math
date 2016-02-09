@@ -44,7 +44,7 @@ public class MCD extends ProcedureDemoFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        
+
     }
 
     @Override

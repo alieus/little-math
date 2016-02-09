@@ -136,7 +136,7 @@ public class UnfilledLineView extends LinearLayout {
                     break;
                 case NATURAL:
                     editText = new EditText(getContext());
-                    editText.setInputType(TYPE_CLASS_NUMBER | TYPE_NUMBER_VARIATION_NORMAL);
+                    editText.setInputType(TYPE_CLASS_NUMBER);
                     editText.setText(elem.getValue());
                     view = editText;
                     break;
