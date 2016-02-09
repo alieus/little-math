@@ -1,47 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LittleMath">
+    tools:context=".LittleMath"
+    android:background="#313131">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/content">
+        android:paddingBottom="3dp"
+        android:background="#65ffffff">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#404040"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Μαθηματικά"
+                android:id="@+id/title"
+                android:textSize="35sp"
+                android:textColor="#ffffff"
+                android:autoText="false"
+                android:layout_gravity="center_horizontal"
+                android:typeface="sans"
+                android:fontFamily="fantasy"
+                android:padding="10dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content"
+        android:paddingTop="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
             android:layout_height="388dp"
             android:orientation="vertical"
-            android:id="@+id/menu">
+            android:id="@+id/menu"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_corners_semitrans"
+            android:paddingLeft="15dp"
+            android:paddingTop="20dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp">
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Εξισώσεις"
                 android:id="@+id/launchEquation"
-                android:layout_gravity="center_horizontal"
-                android:background="#df1d1d"
                 android:textColor="#ffffff"
-                android:visibility="visible"
-                android:singleLine="true"
-                android:onClick="launchEquation" />
+                android:onClick="launchEquation"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_corners_menu_item"
+                android:typeface="serif"
+                android:textSize="18sp"
+                android:textAllCaps="false"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Δυνάμεις του 10"
                 android:id="@+id/launchPower"
-                android:onClick="launchPower" />
+                android:onClick="launchPower"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_corners_menu_item"
+                android:typeface="serif"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Μέγιστο Κοινό Πολλ/σιο"
                 android:id="@+id/launchMCD"
-                android:onClick="launchMCD" />
+                android:onClick="launchMCD"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_corners_menu_item"
+                android:typeface="serif"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
         </LinearLayout>
     </FrameLayout>
 

@@ -1,22 +1,23 @@
 package stathis_katerina.little_math;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import static android.text.InputType.*;
 
 import static stathis_katerina.little_math.UnfilledLine.*;
+import android.app.AlertDialog;
 
-/**
- * Created by Katerina on 8/1/2016.
- */
 public class UnfilledLineView extends LinearLayout {
 
     static interface FilledListener {
@@ -75,7 +76,7 @@ public class UnfilledLineView extends LinearLayout {
         public void afterTextChanged(Editable s) {
             elem.setValue(textView.getText() == null ? null : textView.getText().toString());
             if (elem.isCorrect()) {
-                textView.setTextColor(Color.GREEN);
+                textView.setTextColor(Color.argb(255, 1, 77, 0));
                 if (disableOnCorrect) textView.setEnabled(false);
                 if (model.isAllCorrect()) {
                     if (onFilledListener != null) onFilledListener.onFilled(UnfilledLineView.this);
@@ -86,19 +87,45 @@ public class UnfilledLineView extends LinearLayout {
         }
     }
 
+    private void onListClicked(final Element elem, final TextView v) {
+        if (!v.isEnabled()) return;
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setTitle("Επιλέξτε "+ elem.getOptions().get(0))
+                .setItems(elem.getOptions().subList(1, elem.getOptions().size()).toArray(new String[0]), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String val = elem.getOptions().get(which+1);
+                        v.setText(val);
+                        v.refreshDrawableState();
+                        elem.setValue(val);
+
+                        if (elem.isCorrect()) {
+                            v.setTextColor(Color.argb(255, 1, 77, 0));
+                            if (disableOnCorrect) v.setEnabled(false);
+                            if (model.isAllCorrect()) {
+                                if (onFilledListener != null) onFilledListener.onFilled(UnfilledLineView.this);
+                            }
+                        } else {
+                            v.setTextColor(Color.RED);
+                        }
+                    }
+                });
+        builder.show();
+    }
+
 
     public void setModel(UnfilledLine model) {
         this.model = model;
         removeAllViews();
 
-        for (Element elem : model.getElements()) {
+        for (final Element elem : model.getElements()) {
             View view;
             switch (elem.getType()) {
                 case CONSTANT:
                     TextView textView = new TextView(getContext());
                     textView.setText(elem.getValue());
                     textView.setTextSize(30);
-
+                    textView.setPadding(10, 0, 10, 0);
+                    textView.setTextColor(Color.argb(200, 0, 0, 0));
                     view = textView;
                     break;
                 case INTEGER:
@@ -133,6 +160,25 @@ public class UnfilledLineView extends LinearLayout {
                     view = textViewT;
                     break;
                 case LIST:
+                    final TextView textView2 = new TextView(getContext());
+                    textView2.setText(elem.getValue() == null ? elem.getOptions().get(0) : elem.getValue());
+                    LinearLayout frame = new LinearLayout(getContext());
+                    frame.setOrientation(VERTICAL);
+                    textView2.setPadding(10, 3, 10, 10);
+                    frame.setMinimumWidth(45);
+                    frame.setBackgroundResource(R.drawable.back_list_elem);
+                    textView2.setTextSize(30);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    params.gravity = Gravity.CENTER_HORIZONTAL;
+                    frame.addView(textView2, params);
+                    textView2.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onListClicked(elem, textView2);
+                        }
+                    });
+                    view = frame;
+                    break;
                 default:
                     editText = new EditText(getContext());
                     editText.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_NORMAL);
@@ -140,11 +186,11 @@ public class UnfilledLineView extends LinearLayout {
             }
 
             if (view instanceof TextView) {
-                ((TextView) view).setMinWidth(45);
                 ((TextView) view).addTextChangedListener(new ElementTextChanged(elem, (TextView) view));
             }
 
             if (view instanceof EditText) {
+                ((TextView) view).setMinWidth(45);
                 ((EditText) view).setTextSize(26);
             }
 
@@ -157,6 +203,15 @@ public class UnfilledLineView extends LinearLayout {
         for (int i = 0; i < count; i++) {
             Element elem = model.getElements().get(i);
             switch (elem.getType()) {
+                case LIST:
+                    elem.setValue(elem.getCorrectValue());
+                    TextView v = ((TextView) ((ViewGroup) getChildAt(i)).getChildAt(0));
+                    v.setText(elem.getValue());
+                    if (disableOnCorrect) {
+                        v.setEnabled(false);
+                    }
+                    v.setTextColor(Color.argb(255, 1, 77, 0));
+                    break;
                 default:
                     elem.setValue(elem.getCorrectValue());
                     ((TextView) getChildAt(i)).setText(elem.getValue());

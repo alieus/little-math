@@ -1,6 +1,7 @@
 package stathis_katerina.little_math;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -33,6 +34,10 @@ public class MCD extends ProcedureDemoFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         get(R.id.restart).setVisibility(View.INVISIBLE);
+        Activity act = getActivity();
+        if (act instanceof LittleMath) {
+            ((LittleMath) act).setTitle("Μέγιστος Κοινός Διαιρέτης");
+        }
         askNumberCount();
     }
 

@@ -1,6 +1,7 @@
 package stathis_katerina.little_math;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -31,6 +32,11 @@ public class Power extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Activity act = getActivity();
+        if (act instanceof LittleMath) {
+            ((LittleMath) act).setTitle("Δυνάμεις");
+        }
+
         NumberPicker exp = (NumberPicker) get(R.id.exponent);
         exp.setMaxValue(9);
         exp.setMinValue(0);
@@ -89,7 +95,7 @@ public class Power extends Fragment {
         String result;
         if (base == null) {
             result = "";
-            calc = "Παρακαλώ πληκτρολογήστε την βάση";
+            calc = "Πληκτρολόγησε την βάση";
         } else if (exp == 0) {
             if (base == 0) {
                 calc = "Δεν ορίζεται";
@@ -99,7 +105,7 @@ public class Power extends Fragment {
                 result = "=1";
             }
         } else {
-            calc = repeat(base+"X", exp-1)+base;
+            calc = repeat(base+" x ", exp-1)+base;
             result = "="+Math.round(Math.pow(base, exp));
         }
 

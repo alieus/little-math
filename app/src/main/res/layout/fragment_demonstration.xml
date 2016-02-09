@@ -1,10 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="stathis_katerina.little_math.ProcedureDemoFragment"
     android:paddingTop="20dp"
-    android:paddingLeft="30dp">
+    android:paddingLeft="30dp"
+    android:background="@drawable/rounded_corners_semitrans">
 
 
     <LinearLayout
@@ -27,7 +28,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true"
         android:padding="12dp"
-        android:layout_below="@+id/content" />
+        android:layout_below="@+id/content"
+        android:textSize="23sp"
+        android:textStyle="italic" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -39,20 +42,35 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/comment"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:paddingTop="15dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Συμπλήρωση"
-            android:id="@+id/fill"/>
+            android:textAllCaps="false"
+            android:id="@+id/fill"
+            android:shadowColor="#004ab0"
+            android:textSize="22sp"
+            android:padding="8dp"
+            android:background="#b64065a3"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Επανάληψη"
             android:id="@+id/restart"
-            android:layout_marginLeft="15dp" />
+            android:textAllCaps="false"
+            android:layout_marginLeft="15dp"
+            android:shadowColor="#004ab0"
+            android:textSize="22sp"
+            android:background="#ec4065a3"
+            android:padding="8dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>

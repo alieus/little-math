@@ -1,6 +1,7 @@
 package stathis_katerina.little_math;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.Arrays;
+import java.util.List;
+
 import static stathis_katerina.little_math.UnfilledLine.*;
 
 public class Equation extends ProcedureDemoFragment {
@@ -19,10 +22,15 @@ public class Equation extends ProcedureDemoFragment {
 
     }
 
+    static final List<String> SIGN = Arrays.asList("+/-", "+", "-");
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Activity act = getActivity();
+        if (act instanceof LittleMath) {
+            ((LittleMath) act).setTitle("Εξισώσεις");
+        }
         stepZero();
     }
 
@@ -35,7 +43,7 @@ public class Equation extends ProcedureDemoFragment {
     }
 
     void stepZero() {
-        setComment("Συμπλήηρωσε την εξίσωση που θες να λύσεις");
+        setComment("Συμπλήρωσε την εξίσωση που θες να λύσεις");
         get(R.id.fill).setVisibility(View.INVISIBLE);
         get(R.id.restart).setVisibility(View.INVISIBLE);
 
@@ -43,7 +51,7 @@ public class Equation extends ProcedureDemoFragment {
         line.setModel(new UnfilledLine(Arrays.asList(
                 new Element(null, ElementType.NUMBER, null),
                 new Element("x"),
-                new Element(null, ElementType.LIST, null),
+                new Element(SIGN, null, null),
                 new Element(null, ElementType.UNSIGNED_NUMBER, null),
                 new Element("="),
                 new Element(null, ElementType.NUMBER, null)
@@ -51,26 +59,16 @@ public class Equation extends ProcedureDemoFragment {
         line.setDisableOnCorrect(false);
         ((LinearLayout) get(R.id.content)).addView(line);
 
-        final Button ok = new Button(getContext());
-        ok.setText("ΟΚ!");
-        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
-        params.setMargins(100, 0, 0, 0);
-        line.addView(ok, params);
-        ok.setPadding(20, 20, 20, 20);
-        ok.setOnClickListener(new View.OnClickListener() {
+        final Button ok = Common.makeOkButton(getContext(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (line.getModel().isAllFilled()) {
                     stepOne(line.getModel());
-                    ok.setVisibility(View.GONE);
+                    v.setVisibility(View.GONE);
                 }
             }
         });
-
-
+        line.addView(ok, Common.makeMarginLayoutParams(100, 0, 0, 0));
     }
 
     void stepOne(UnfilledLine prevLine) {
@@ -81,7 +79,7 @@ public class Equation extends ProcedureDemoFragment {
                 new Element("x"),
                 new Element("="),
                 new Element(null, ElementType.NUMBER, prevLine.getElements().get(5).getValue()),
-                new Element(null, ElementType.LIST, prevLine.getElements().get(2).getValue().equals("+") ? "-" : "+"),
+                new Element(SIGN, null, prevLine.getElements().get(2).getValue().equals("+") ? "-" : "+"),
                 new Element(null, ElementType.UNSIGNED_NUMBER, prevLine.getElements().get(3).getValue())
         )));
         ((LinearLayout) get(R.id.content)).addView(line);

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.TextView;
 
 public class LittleMath extends FragmentActivity {
 
@@ -15,6 +16,10 @@ public class LittleMath extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_little_math);
+    }
+
+    public void setTitle(CharSequence title) {
+        ((TextView) findViewById(R.id.title)).setText(title);
     }
 
     void putFragmentToContent(Fragment fragment) {
@@ -33,6 +38,7 @@ public class LittleMath extends FragmentActivity {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
         findViewById(R.id.menu).setVisibility(View.VISIBLE);
+        setTitle("Μαθηματικά");
     }
 
     public void launchPower(View view) {

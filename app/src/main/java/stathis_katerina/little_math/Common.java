@@ -10,7 +10,7 @@ public class Common {
     public static Button makeOkButton(Context context, View.OnClickListener action) {
         Button ok = new Button(context);
         ok.setText("OK!");
-        ok.setPadding(20, 20, 20, 20);
+        ok.setPadding(10, 15, 10, 15);
         ok.setOnClickListener(action);
         return ok;
     }

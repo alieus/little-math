@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="stathis_katerina.little_math.Power"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/rounded_corners_semitrans"
+    android:padding="30dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="139dp"
